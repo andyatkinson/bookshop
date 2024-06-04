@@ -25,7 +25,8 @@ ActiveRecord::Schema.define do
 
   create_table :books, force: true do |t|
     t.text :title, null: false
-    t.integer :author_id, null: false
+    t.text :author_first_name, null: false
+    t.text :author_last_name, null: false
   end
 end
 
@@ -38,10 +39,10 @@ class App < Rails::Application
 end
 
 class Author < ActiveRecord::Base
-  #self.primary_key = [:first_name, :last_name]
-  has_many :books#, query_constraints: [:first_name, :last_name]
+  self.primary_key = [:first_name, :last_name]
+  has_many :books, query_constraints: [:author_first_name, :author_last_name]
 end
 
 class Book < ActiveRecord::Base
-  belongs_to :author#, query_constraints: [:author_first_name, :author_last_name]
+  belongs_to :author, query_constraints: [:author_first_name, :author_last_name]
 end
