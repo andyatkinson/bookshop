@@ -34,3 +34,15 @@ An error occurred when inspecting the object: #<ActiveRecord::StatementInvalid:"
 does not exist\nLINE 1: SELECT \"books\".* FROM \"books\" WHERE \"books\".\"first_name\" = $...\n
         ^\n">
 ```
+
+
+## June 4
+
+<https://github.com/rails/rails/pull/51571#issuecomment-2143128604>
+
+```rb
+# Tried this within the app
+Rails.application.config.load_defaults 7.2
+
+# Same issue with generating invalid SQL
+```
