@@ -34,6 +34,7 @@ class App < Rails::Application
   config.consider_all_requests_local = true
   config.secret_key_base = 'i_am_a_secret'
   config.active_storage.service_configurations = { 'local' => { 'service' => 'Disk', 'root' => './storage' } }
+  config.load_defaults 7.1
 end
 
 class Author < ActiveRecord::Base
