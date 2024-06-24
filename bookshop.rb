@@ -4,7 +4,7 @@ require 'bundler/inline'
 gemfile(true) do
   source 'https://rubygems.org'
 
-  gem 'rails', '~> 7.1'
+  gem 'rails', '~> 7.2.0.beta1'
   gem 'pg'
 end
 
@@ -25,7 +25,9 @@ ActiveRecord::Schema.define do
 
   create_table :books, force: true do |t|
     t.text :title, null: false
-    t.integer :author_id, null: false
+    # t.integer :author_id, null: false
+    t.text :author_first_name, null: false
+    t.text :author_last_name, null: false
   end
 end
 
@@ -38,9 +40,14 @@ end
 
 class Author < ActiveRecord::Base
   self.primary_key = [:first_name, :last_name]
-  has_many :books, query_constraints: [:first_name, :last_name]
+
+  # For Rails 7.2+, use "foreign_key"
+  # For < Rails 7.2, change to:
+  # has_many :books, query_constraints: [:first_name, :last_name]
+  has_many :books, foreign_key: [:author_first_name, :author_last_name]
 end
 
 class Book < ActiveRecord::Base
-  belongs_to :author, query_constraints: [:author_first_name, :author_last_name]
+  # belongs_to :author, query_constraints: [:author_first_name, :author_last_name]
+  belongs_to :author, foreign_key: [:author_first_name, :author_last_name]
 end
