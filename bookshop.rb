@@ -25,7 +25,8 @@ ActiveRecord::Schema.define do
 
   create_table :books, force: true do |t|
     t.text :title, null: false
-    t.integer :author_id, null: false
+    t.text :author_first_name, null: false
+    t.text :author_last_name, null: false
   end
 end
 
@@ -34,11 +35,12 @@ class App < Rails::Application
   config.consider_all_requests_local = true
   config.secret_key_base = 'i_am_a_secret'
   config.active_storage.service_configurations = { 'local' => { 'service' => 'Disk', 'root' => './storage' } }
+  config.load_defaults 7.1
 end
 
 class Author < ActiveRecord::Base
   self.primary_key = [:first_name, :last_name]
-  has_many :books, query_constraints: [:first_name, :last_name]
+  has_many :books, query_constraints: [:author_first_name, :author_last_name]
 end
 
 class Book < ActiveRecord::Base
